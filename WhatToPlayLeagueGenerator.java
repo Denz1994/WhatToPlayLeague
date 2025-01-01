@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import javax.swing.JOptionPane;
+
 
 public class WhatToPlayLeagueGenerator {
     public static void main(String[] args){
@@ -13,8 +15,13 @@ public class WhatToPlayLeagueGenerator {
         Random random = new Random();
         String selectedChamp = allChamps.get(random.nextInt(allChamps.size()));
         String selectedPlaystyle = playstyles.get(random.nextInt(playstyles.size()));
-
-        System.out.printf("\n\nChamp: %s\tPlaystyle: %s\n\n", selectedChamp, selectedPlaystyle);
+        String message = String.format(
+                "Champ: %-15s\nPlaystyle: %-15s",
+                selectedChamp,
+                selectedPlaystyle
+        );
+        System.out.println(message);
+        JOptionPane.showMessageDialog(null,message);
     }
 
     public static ArrayList<String> getChamps(String fileName){
