@@ -4,11 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JOptionPane;
-                                                                                                        import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 public class WhatToPlayLeagueGenerator {
     public static void main(String[] args){
