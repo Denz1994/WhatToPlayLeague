@@ -1,12 +1,14 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JOptionPane;
-
+                                                                                                        import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class WhatToPlayLeagueGenerator {
     public static void main(String[] args){
@@ -39,5 +41,23 @@ public class WhatToPlayLeagueGenerator {
             error.printStackTrace();
         }
         return champs;
+    }
+    // TODO: Use json reader not file reader. Jackson? JSON.simple?
+    public static ArrayList<String> getChampsFromJson(String filename){
+        ArrayList<String> champions = new ArrayList<String>();
+
+        try(BufferedReader br = new BufferedReader(new FileReader(filename))){
+           String line;
+           while((line = br.readLine()) != null){
+               if(!line.isEmpty()){
+                   System.out.println(line);
+               }
+           }
+       }
+       catch (IOException error){
+           error.printStackTrace();
+       }
+
+        return champions;
     }
 }
