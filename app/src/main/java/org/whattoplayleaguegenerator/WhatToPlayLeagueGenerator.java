@@ -1,3 +1,5 @@
+package org.whattoplayleaguegenerator;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,16 +44,16 @@ public class WhatToPlayLeagueGenerator {
         ArrayList<String> champions = new ArrayList<String>();
 
         try(BufferedReader br = new BufferedReader(new FileReader(filename))){
-           String line;
-           while((line = br.readLine()) != null){
-               if(!line.isEmpty()){
-                   System.out.println(line);
-               }
-           }
-       }
-       catch (IOException error){
-           error.printStackTrace();
-       }
+            String line;
+            while((line = br.readLine()) != null){
+                if(!line.isEmpty()){
+                    System.out.println(line);
+                }
+            }
+        }
+        catch (IOException error){
+            error.printStackTrace();
+        }
 
         return champions;
     }

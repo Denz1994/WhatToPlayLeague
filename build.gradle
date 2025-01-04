@@ -4,31 +4,35 @@
  * This is a general purpose Gradle build.
  * Learn more about Gradle by exploring our Samples at https://docs.gradle.org/8.12/samples
  */
+
 plugins {
     id 'java'
-    id 'application' // For running your application
+    id 'application'
 }
-
-group 'com.example'
-version '1.0-SNAPSHOT'
 
 repositories {
-    mavenCentral() // Fetch dependencies from Maven Central
+    mavenCentral()
 }
-
 dependencies {
-    // Add libraries here, e.g., Jackson for JSON parsing
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
-
-    // Test libraries
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+}
+sourceSets {
+    main {
+        java {
+            srcDirs = ['app/src/main/java']
+        }
+    }
 }
 
 application {
-    // Specify the main class (replace with your main class path)
-    mainClass = 'com.example.Main'
+    mainClass = 'org.whattoplayleaguegenerator.WhatToPlayLeagueGenerator'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+tasks.jar {
+    from sourceSets.main.output
+    manifest {
+        attributes(
+                'Main-Class': 'org.whattoplayleaguegenerator.WhatToPlayLeagueGenerator'
+        )
+    }
 }
