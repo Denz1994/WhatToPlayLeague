@@ -23,18 +23,17 @@ public class WhatToPlayLeagueGenerator {
         JOptionPane.showMessageDialog(null,message);
     }
 
-    public static ArrayList<String> getChamps(String fileName){
-        ArrayList<String> champs = new ArrayList<String>();
-
-        try (BufferedReader br = new BufferedReader( new FileReader(fileName))){
+    public static ArrayList<String> getChamps(String fileName) {
+        ArrayList<String> champs = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                WhatToPlayLeagueGenerator.class.getClassLoader().getResourceAsStream(fileName)))) {
             String line;
-            while((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 if (!line.isEmpty()) {
                     champs.add(line);
                 }
             }
-        }
-        catch ( IOException error){
+        } catch (IOException | NullPointerException error) {
             error.printStackTrace();
         }
         return champs;
