@@ -1,15 +1,17 @@
 package org.whattoplayleaguegenerator;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
 import javax.swing.JOptionPane;
 
 public class WhatToPlayLeagueGenerator {
-    public static void main(String[] args){
-        ArrayList<String> allChamps = getChamps("ChampList.txt");
+    public static void main(String[] args) throws IOException {
+        ArrayList<String> allChamps = getChampsFromJson("Champions.json");
+
         List<String> playstyles = new ArrayList<String>(Arrays.asList("burst dmg","annoying cdr", "tank", "pve", "support", "meta", "try hard sweaty"));
         Random random = new Random();
         String selectedChamp = allChamps.get(random.nextInt(allChamps.size()));
@@ -38,20 +40,22 @@ public class WhatToPlayLeagueGenerator {
         }
         return champs;
     }
-    // TODO: Use json reader not file reader. Jackson? JSON.simple?
-    public static ArrayList<String> getChampsFromJson(String filename){
+    public static ArrayList<String> getChampsFromJson(String filename) throws IOException {
         ArrayList<String> champions = new ArrayList<String>();
-
-        try(BufferedReader br = new BufferedReader(new FileReader(filename))){
-            String line;
-            while((line = br.readLine()) != null){
-                if(!line.isEmpty()){
-                    System.out.println(line);
-                }
+        try {
+            InputStream inputStreamReader = WhatToPlayLeagueGenerator.class.getClassLoader().getResourceAsStream(filename);
+            if (inputStreamReader== null){
+                throw new IllegalArgumentException("File not found");
             }
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            HashMap championMap = objectMapper.readValue(inputStreamReader, HashMap.class);
+            LinkedHashMap<String, Object> champDataMap = (LinkedHashMap<String, Object>) championMap.get("data");
+            champions = new ArrayList<>(champDataMap.keySet());
         }
-        catch (IOException error){
-            error.printStackTrace();
+        catch(IOException e){
+            System.out.println("Error: "+e.getMessage());
+            e.printStackTrace();
         }
 
         return champions;
